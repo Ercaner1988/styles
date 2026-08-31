@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  NOT: default-locale bilinçli olarak en-US. citeproc-js (Zotero) text-case
+  buyuk harf donusumunu stilin ana diline gore yapar; tr-TR'de kucuk "i"
+  noktali "İ" olur ve Madde 20/14-d'nin istedigi buyuk Romen rakami "C.II"
+  yerine "C.İİ" cikar. Ana dili en-US tutup tum Turkce terimleri (ay adlari
+  ve ordinal ekleri dahil) asagidaki locale blogunda tanimlayinca hem
+  "C.II" hem "Eylul-Aralik 1987" hem "3. bs." dogru cikar.
+-->
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0"
+       default-locale="en-US" page-range-format="expanded">
+  <info>
+    <title>İstanbul Üniversitesi Sosyal Bilimler Enstitüsü (Tez Hazırlama Yönergesi)</title>
+    <title-short>İÜ SBE Yönerge</title-short>
+    <id>http://www.zotero.org/styles/istanbul-universitesi-sbe-yonerge</id>
+    <link href="http://www.zotero.org/styles/istanbul-universitesi-sbe-yonerge" rel="self"/>
+    <author><name>Mihenk</name></author>
+    <category citation-format="note"/>
+    <category field="generic-base"/>
+    <summary>İ.Ü. Sosyal Bilimler Enstitüsü Tez Hazırlama Yönergesi'nden doğrudan
+      inşa edilmiştir (Madde 18-22, Örnek 3-4). Türkçe kısaltma dizisi seçilidir
+      (a.g.e., a.y., s., t.y., y.y., v.d.) — Madde 21 bir dizinin seçilip tez
+      boyunca tutarlı uygulanmasını şart koşar.</summary>
+    <updated>2026-08-31T00:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</rights>
+  </info>
+
+  <!--
+    Yönergenin Türkçe kısaltma sütunu (Madde 21 tablosu). Ana dil en-US
+    olduğu için ay adları ve ordinal ekleri de burada Türkçe tanımlanır
+    (aksi halde "September" ve "3rd" çıkardı).
+  -->
+  <locale xml:lang="en-US">
+    <terms>
+      <term name="page" form="short">s.</term>
+      <term name="volume" form="short">C.</term>
+      <term name="issue" form="short">No:</term>
+      <term name="edition" form="short">bs.</term>
+      <term name="editor" form="short">Ed.</term>
+      <term name="translator" form="short">Çev.</term>
+      <term name="container-author" form="short">Ed.</term>
+      <term name="director" form="short">Yön.</term>
+      <term name="no date" form="short">t.y.</term>
+      <term name="and others">v.d.</term>
+      <term name="et-al">v.d.</term>
+      <term name="ibid">A.e.</term>
+      <term name="accessed"></term>
+      <term name="in"></term>
+      <term name="month-01">Ocak</term>
+      <term name="month-02">Şubat</term>
+      <term name="month-03">Mart</term>
+      <term name="month-04">Nisan</term>
+      <term name="month-05">Mayıs</term>
+      <term name="month-06">Haziran</term>
+      <term name="month-07">Temmuz</term>
+      <term name="month-08">Ağustos</term>
+      <term name="month-09">Eylül</term>
+      <term name="month-10">Ekim</term>
+      <term name="month-11">Kasım</term>
+      <term name="month-12">Aralık</term>
+      <!-- Basım "3. bs." diye yazılır (Madde 20/14-b); İngilizce "rd/th" ekleri ezilir. -->
+      <term name="ordinal">.</term>
+      <term name="ordinal-01">.</term>
+      <term name="ordinal-02">.</term>
+      <term name="ordinal-03">.</term>
+      <term name="ordinal-11">.</term>
+      <term name="ordinal-12">.</term>
+      <term name="ordinal-13">.</term>
+    </terms>
+  </locale>
+
+  <!-- ===== Makrolar ===== -->
+
+  <!-- Dipnotta: Ad Soyad, düz sırada (Madde 20/1). -->
+  <!--
+    Madde 20/1: yazar adı iç kapaktaki haliyle, tam yazılır (initialize yok).
+    Madde 20/2: birden çok yazar yalnız virgülle ayrılır, "ve" kullanılmaz
+    (Örnek 3: "Hare, Edgar R. Bogotta, Robert F. Bales").
+  -->
+  <macro name="yazar">
+    <names variable="author">
+      <name delimiter=", "/>
+      <label form="short" prefix=" (" suffix=")"/>
+      <substitute>
+        <!--
+          Yazar yoksa eserden sorumlu diğer roller yazar yerine geçer:
+          editör, çevirmen, yönetmen (video/film), kanal vb. (Madde 20/1'deki
+          "tüzel kişi" ilkesinin genişletilmesi). Hiçbiri yoksa dipnot eser
+          adıyla başlar (Madde 20/4).
+        -->
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <names variable="director"/>
+        <text macro="baslik"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <!-- Kaynakçada: Soyad, Ad: (Madde 22, Örnek 4). -->
+  <macro name="yazar-kaynakca">
+    <names variable="author">
+      <name name-as-sort-order="first" sort-separator=", " delimiter=", "/>
+      <label form="short" prefix=" (" suffix=")"/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <names variable="director"/>
+        <text macro="baslik"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <!-- Sonraki atıflarda yalnız soyadı (Madde 21). -->
+  <macro name="yazar-kisa">
+    <names variable="author">
+      <name form="short" delimiter=", "/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <names variable="director"/>
+        <text macro="baslik-kisa"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <!--
+    Eser adı KOYU, italik değil (Madde 20/7-8: "kitap adları, koyu renk
+    harflerle yazılır"). Makale/tez/ansiklopedi maddesi adları çift tırnak
+    içinde ve koyu DEĞİL (Madde 20/10-12).
+    Kutsal kitaplar koyu yazılmaz (Madde 20/17).
+  -->
+  <macro name="baslik">
+    <choose>
+      <if type="article-journal article-magazine article-newspaper chapter
+                paper-conference entry-encyclopedia entry-dictionary post-weblog
+                webpage thesis manuscript" match="any">
+        <text variable="title" quotes="true"/>
+      </if>
+      <else-if variable="archive" match="all">
+        <text variable="title"/>
+      </else-if>
+      <else>
+        <text variable="title" font-weight="bold"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="baslik-kisa">
+    <choose>
+      <if type="article-journal article-magazine article-newspaper chapter
+                paper-conference entry-encyclopedia entry-dictionary post-weblog
+                webpage thesis manuscript" match="any">
+        <text variable="title" form="short" quotes="true"/>
+      </if>
+      <else>
+        <text variable="title" form="short" font-weight="bold"/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Süreli yayın / kitap içi derleme adı da koyu (Madde 20/8). -->
+  <macro name="kapsayici">
+    <text variable="container-title" font-weight="bold"/>
+  </macro>
+
+  <!-- Çeviren / yayına hazırlayan (Madde 20/9). -->
+  <macro name="ceviren-editor">
+    <group delimiter=", ">
+      <names variable="translator">
+        <label form="short" text-case="capitalize-first" suffix=" "/>
+        <name delimiter=", "/>
+      </names>
+      <names variable="editor">
+        <label form="short" text-case="capitalize-first" suffix=" "/>
+        <name delimiter=", "/>
+      </names>
+    </group>
+  </macro>
+
+  <!-- Basım: ilk basımda belirtilmez, 2. ve sonrası "3. bs." (Madde 20/14-b). -->
+  <macro name="basim">
+    <choose>
+      <if is-numeric="edition">
+        <group delimiter=" ">
+          <number variable="edition" form="ordinal"/>
+          <label variable="edition" form="short"/>
+        </group>
+      </if>
+      <else>
+        <text variable="edition"/>
+      </else>
+    </choose>
+  </macro>
+
+  <!--
+    Cilt büyük Romen rakamıyla (Madde 20/14-d: "ilgili cilt numarası büyük
+    Romen rakamıyla verilir"). Örnekler: C.II, C.XV, Vol.IX.
+  -->
+  <macro name="cilt-sayi">
+    <group delimiter=", ">
+      <group>
+        <label variable="volume" form="short"/>
+        <!--
+          Büyük Romen rakamı (Madde 20/14-d, Örnek 3: C.II, C.XV). Doğru
+          "II" çıkması stilin ana dilinin en-US olmasına bağlı; bakınız
+          yukarıdaki not.
+        -->
+        <number variable="volume" form="roman" text-case="uppercase"/>
+      </group>
+      <group>
+        <label variable="issue" form="short"/>
+        <number variable="issue"/>
+      </group>
+    </group>
+  </macro>
+
+  <!--
+    Yayım bilgisi. Yer yoksa da yayımcı yoksa da "y.y." (Madde 20/14-c).
+    Yönerge ikisi için de aynı kısaltmayı veriyor; burada lafzına uyuluyor.
+  -->
+  <macro name="yayim">
+    <group delimiter=", ">
+      <choose>
+        <if variable="publisher-place">
+          <text variable="publisher-place"/>
+        </if>
+        <else-if type="book chapter entry-encyclopedia thesis" match="any">
+          <text value="y.y."/>
+        </else-if>
+      </choose>
+      <choose>
+        <if variable="publisher">
+          <text variable="publisher"/>
+        </if>
+        <else-if type="book chapter entry-encyclopedia" match="any">
+          <text value="y.y."/>
+        </else-if>
+      </choose>
+    </group>
+  </macro>
+
+  <macro name="tarih">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text term="no date" form="short"/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Süreli yayınlarda tam tarih verilir: "Eylül-Aralık 1987". -->
+  <macro name="tarih-sureli">
+    <choose>
+      <if variable="issued">
+        <date variable="issued" delimiter=" ">
+          <date-part name="month"/>
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text term="no date" form="short"/>
+      </else>
+    </choose>
+  </macro>
+
+  <!--
+    Gazetelerde tam tarih: gün, ay, yıl (Madde 20/16: "ilgili gazetenin adı,
+    günü, ayı, yılı ve sayfası belirtilir"). Örnek 3: "3 Nisan 2000".
+  -->
+  <macro name="tarih-tam">
+    <choose>
+      <if variable="issued">
+        <date variable="issued" delimiter=" ">
+          <date-part name="day"/>
+          <date-part name="month"/>
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text term="no date" form="short"/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Elektronik kaynak: "(Çevrimiçi) URL, erişim tarihi" (Madde 20/13). -->
+  <macro name="cevrimici">
+    <choose>
+      <if variable="URL">
+        <group delimiter=", ">
+          <text variable="URL" prefix="(Çevrimiçi) "/>
+          <date variable="accessed" delimiter=" ">
+            <date-part name="day"/>
+            <date-part name="month"/>
+            <date-part name="year"/>
+          </date>
+        </group>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="konum">
+    <group delimiter=" ">
+      <label variable="locator" form="short"/>
+      <text variable="locator"/>
+    </group>
+  </macro>
+
+  <macro name="sayfa-araligi">
+    <group delimiter=" ">
+      <label variable="page" form="short"/>
+      <text variable="page"/>
+    </group>
+  </macro>
+
+  <!-- Bir kaydın tam künyesi; dipnotta ve kaynakçada aynı gövde kullanılır. -->
+  <macro name="kunye">
+    <choose>
+      <if type="chapter paper-conference entry-encyclopedia entry-dictionary" match="any">
+        <group delimiter=", ">
+          <text macro="baslik"/>
+          <text macro="kapsayici"/>
+          <text macro="cilt-sayi"/>
+          <text macro="ceviren-editor"/>
+          <text macro="basim"/>
+          <text macro="yayim"/>
+          <text macro="tarih"/>
+        </group>
+      </if>
+      <!-- Gazete: ad, tam tarih (gün ay yıl), sayfa (Madde 20/16). -->
+      <else-if type="article-newspaper">
+        <group delimiter=", ">
+          <text macro="baslik"/>
+          <text macro="ceviren-editor"/>
+          <text macro="kapsayici"/>
+          <text macro="tarih-tam"/>
+        </group>
+      </else-if>
+      <else-if type="article-journal article-magazine" match="any">
+        <group delimiter=", ">
+          <text macro="baslik"/>
+          <text macro="ceviren-editor"/>
+          <text macro="kapsayici"/>
+          <text macro="cilt-sayi"/>
+          <text macro="tarih-sureli"/>
+        </group>
+      </else-if>
+      <else-if type="thesis">
+        <group delimiter=", ">
+          <text macro="baslik"/>
+          <text variable="genre"/>
+          <text macro="yayim"/>
+          <text macro="tarih"/>
+        </group>
+      </else-if>
+      <else-if type="webpage post-weblog" match="any">
+        <group delimiter=", ">
+          <text macro="baslik"/>
+          <text macro="kapsayici"/>
+          <text macro="tarih"/>
+        </group>
+      </else-if>
+      <!--
+        Video / film / radyo-TV yayını: eser adı koyu; yönetmen/kanal zaten
+        yazar yerine ilk alana düştüğü için burada tekrarlanmaz. Site/kanal
+        adı (YouTube, TRT vb.) koyu DEĞİL — Madde 5/b yalnız kitap ve dergi
+        adlarını koyu ister.
+      -->
+      <else-if type="video motion_picture broadcast song" match="any">
+        <group delimiter=", ">
+          <text macro="baslik"/>
+          <text variable="genre"/>
+          <text variable="container-title"/>
+          <text macro="yayim"/>
+          <text macro="tarih"/>
+        </group>
+      </else-if>
+      <else>
+        <group delimiter=", ">
+          <text macro="baslik"/>
+          <text macro="ceviren-editor"/>
+          <text macro="cilt-sayi"/>
+          <text macro="basim"/>
+          <text macro="yayim"/>
+          <text macro="tarih"/>
+        </group>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- ===== Dipnotlar (Madde 19-21) ===== -->
+  <citation et-al-min="4" et-al-use-first="1" disambiguate-add-names="true">
+    <layout suffix="." delimiter="; ">
+      <choose>
+        <!--
+          Aynı esere izleyen referans → "A.e." / "A.e., s. 40."
+          Kısaltma eser adının yerine geçtiği için koyu (Örnek 3).
+        -->
+        <if position="ibid-with-locator">
+          <group delimiter=", ">
+            <text term="ibid" font-weight="bold"/>
+            <text macro="konum"/>
+          </group>
+        </if>
+        <else-if position="ibid">
+          <text term="ibid" font-weight="bold"/>
+        </else-if>
+        <!--
+          Araya başka referans girdiyse → "Sartori, a.g.e., s. 22."
+          NOT: yönerge "loc. cit." / "a.y." (yazara ait son zikredilen yer)
+          karşılığını da tanıyor, ama CSL'de o konumun karşılığı yok.
+          Elle yazılması gerekir; tezde 8 yerde geçiyor.
+        -->
+        <else-if position="subsequent">
+          <group delimiter=", ">
+            <text macro="yazar-kisa"/>
+            <text value="a.g.e." font-weight="bold"/>
+            <text macro="konum"/>
+          </group>
+        </else-if>
+        <!-- İlk atıf: tam künye (Madde 20). -->
+        <else>
+          <group delimiter=", ">
+            <text macro="yazar"/>
+            <text macro="kunye"/>
+            <text macro="cevrimici"/>
+            <text macro="konum"/>
+          </group>
+        </else>
+      </choose>
+    </layout>
+  </citation>
+
+  <!-- ===== Bibliyografya (Madde 22, Örnek 4) ===== -->
+  <!--
+    `second-field-align="flush"`: Örnek 4'teki iki sütunlu görünüm —
+    yazar adı ("Soyad, Ad:") ilk alan, künye sekme (tab) sonrası ikinci
+    alan olarak dizilir; taşan satırlar künye sütunu hizasından devam
+    eder. Zotero bunu Word'e sekme + asılı girinti olarak yazar.
+    NOT: Sekme/girinti ölçüleri Word'de paragrafın doğrudan biçimlendirmesi
+    olarak yazılır; kendi paragraf biçeminizi (biçem) kullanıyorsanız
+    kaynakça paragrafındaki doğrudan biçimlendirmenin biçemi ezmemesine
+    dikkat edin.
+
+    Örnek 4'te aynı yazarın ardışık künyelerinde yazar adı tekrar tam yazılır
+    ("Tanör, Bülent:" iki kez); o yüzden subsequent-author-substitute YOK.
+
+    `entry-spacing="0"`: künyeler arası boşluk paragraf biçeminden gelir
+    (önce 10 nk / sonra 10 nk), CSL'den değil.
+  -->
+  <bibliography hanging-indent="true" second-field-align="flush"
+                entry-spacing="0" et-al-min="4" et-al-use-first="1">
+    <sort>
+      <key macro="yazar-kaynakca"/>
+      <key macro="tarih"/>
+    </sort>
+    <layout suffix=".">
+      <!--
+        İlk üst düzey öğe birinci alan (yazar), ikincisi ikinci alan (künye);
+        araya `second-field-align` sekmeyi koyar, iki nokta ikinci alanın
+        önekinden gelir: "Soyad, Ad: [sekme] Künye."
+      -->
+      <text macro="yazar-kaynakca"/>
+      <!-- Kitapta sayfa yok, makalede sayfa aralığı var. Önek yalnız ":"
+           — boşluk sekmenin sağ tarafına taşmasın diye konmuyor. -->
+      <group delimiter=", " prefix=":">
+        <text macro="kunye"/>
+        <text macro="cevrimici"/>
+        <choose>
+          <if type="article-journal article-magazine article-newspaper chapter
+                    paper-conference entry-encyclopedia entry-dictionary" match="any">
+            <text macro="sayfa-araligi"/>
+          </if>
+        </choose>
+      </group>
+    </layout>
+  </bibliography>
+</style>
