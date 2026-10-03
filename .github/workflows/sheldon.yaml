@@ -68,7 +68,7 @@ jobs:
     - name: Bundle install
       run: |
         bundle config path vendor/bundle
-        bundle update sheldon --jobs 4 --retry 3
+        bundle install --jobs 4 --retry 3
 
     - name: Welcome to a new PR
       if: github.event.action == 'opened' && steps.changed.outputs.style == 'true'
